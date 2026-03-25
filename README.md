@@ -1,6 +1,6 @@
 # Academic Personal Website
 
-A clean, minimal academic website combining the typographic elegance of [Brittany Chiang v1](https://bchiang7.github.io/) with the navigation UX of [Brittany Chiang v4](https://v4.brittanychiang.com/).
+A clean, minimal academic website combining the typographic elegance of [Brittany Chiang v3](https://bchiang7.github.io/) with the navigation UX of [Brittany Chiang v4](https://v4.brittanychiang.com/).
 
 ## Local Development
 
