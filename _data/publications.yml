@@ -5,7 +5,9 @@
 
 - title: "Towards a verified compiler for Distributed PlusCal (extended)"
   authors: "**Ghilain Bergeron**, Horatiu Cirstea, Stephan Merz"
-  venue: "To appear in Journal of Logical and Algebraic Methods in Programming"
+  venue: "Journal of Logical and Algebraic Methods in Programming"
+  venue_url: "https://www.sciencedirect.com/journal/journal-of-logical-and-algebraic-methods-in-programming"
+  kind: to appear
   year: 2026
   abstract: |
     Formal verification techniques are frequently used to ensure correctness properties of distributed systems and algorithms. 
@@ -22,7 +24,8 @@
 
 - title: "BARReL: A modern backend for Atelier B in Lean"
   authors: "**Ghilain Bergeron**, Vincent Trélat"
-  venue: "Submitted" # to 17th International Conference on Interactive Theorem Proving"
+  venue: ""
+  kind: submitted
   year: 2026
   abstract: | 
     BARReL is a Lean 4 library bridging Atelier B, an industrial tool for the B method, and the Lean proof assistant by 
@@ -41,6 +44,8 @@
 - title: "Formalizing Splitting in Isabelle/HOL"
   authors: "**Ghilain Bergeron**, Florent Krasnopol, Sophie Tourret"
   venue: "16th International Conference on Interactive Theorem Proving"
+  venue_url: "https://icetcs.github.io/frocos-itp-tableaux25/itp/"
+  kind: appeared
   year: 2025
   abstract: |
     We describe the formalization in Isabelle/HOL of a framework for splitting, a theorem proving
@@ -50,13 +55,17 @@
   links:
     - label: Paper 
       url: "https://hal.univ-lorraine.fr/LORIA-FM/hal-05329260v1"
-    - label: Conference
-      url: "https://icetcs.github.io/frocos-itp-tableaux25/itp/"
+    - label: DOI
+      url: "https://doi.org/10.4230/LIPIcs.ITP.2025.22"
+    - label: BibTeX
+      url: "/assets/citations/formalizing-splitting-in-isabelle-hol.bib"
   tags: [Formal Verification, Isabelle/HOL, Saturation-Based Calculi, Splitting]
 
 - title: "Towards a verified compiler for Distributed PlusCal"
   authors: "**Ghilain Bergeron**, Horatiu Cirstea, Stephan Merz"
   venue: "11th International Workshop on Rewriting Techniques for Program Transformations and Evaluation"
+  venue_url: "https://wpte2025.github.io/"
+  kind: appeared
   year: 2025
   abstract: |
     Formal verification techniques are frequently used to ensure correctness properties of distributed systems and algorithms. 
@@ -69,13 +78,15 @@
   links:
     - label: Paper 
       url: "https://hal.science/hal-05329156/"
-    - label: Workshop
-      url: "https://wpte2025.github.io/"
+    - label: Slides
+      url: "/assets/slides/WPTE-2025.pdf"
   tags: [Compilation, Formal Verification, PlusCal, Distributed Algorithms, Rewriting]
 
 - title: "HOL Light to Isabelle/HOL translation, rebooted"
   authors: "**Ghilain Bergeron**, Stéphane Glondu and Sophie Tourret"
   venue: "Isabelle Workshop"
+  venue_url: "https://sketis.net/isabelle/isabelle-workshop-2024"
+  kind: appeared
   year: 2024
   abstract: |
     This paper is a report on the use of a ten-year-old proof translation
@@ -88,6 +99,4 @@
   links:
     - label: Paper
       url: "https://members.loria.fr/sophie.tourret/papers/isabelle24translation.pdf"
-    - label: Workshop
-      url: "https://sketis.net/isabelle/isabelle-workshop-2024"
   tags: [Isabelle/HOL, HOL Light, Automatic Proof Translation]

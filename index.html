@@ -134,7 +134,26 @@ title: Home
         </h3>
 
         <p class="pub-authors">{{ pub.authors | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
-        <p class="pub-venue"><em>{{ pub.venue }} ({{ pub.year }})</em></p>
+        <p class="pub-venue">
+          {% assign pub_kind = pub.kind %}
+          {% if pub_kind == "appeared" %}
+            In:
+          {% elsif pub_kind == "to appear" %}
+            To appear in:
+          {% elsif pub_kind == "submitted" %}
+            <em>Submitted</em>
+          {% endif %}
+          <em>
+            {% if pub.venue_url %}
+            <a href="{{ pub.venue_url }}">
+            {% endif %}
+              {{ pub.venue | markdownify | remove: '<p>' | remove: '</p>' | strip }}
+            {% if pub.venue_url %}
+            </a>
+            {% endif %} 
+            ({{ pub.year }})
+          </em>
+        </p>
 
         {% if pub.abstract and pub.abstract != "" %}
         <details class="pub-abstract">
