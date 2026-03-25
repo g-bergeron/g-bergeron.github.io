@@ -22,7 +22,7 @@
 
 - title: "BARReL: A modern backend for Atelier B in Lean"
   authors: "**Ghilain Bergeron**, Vincent Trélat"
-  venue: "Submitted to 17th International Conference on Interactive Theorem Proving"
+  venue: "Submitted" # to 17th International Conference on Interactive Theorem Proving"
   year: 2026
   abstract: | 
     BARReL is a Lean 4 library bridging Atelier B, an industrial tool for the B method, and the Lean proof assistant by 
