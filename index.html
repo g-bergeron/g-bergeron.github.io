@@ -13,10 +13,10 @@ title: Home
     <h2 class="hero-sub">{{ site.author.tagline }}</h2>
     <p class="hero-desc">
       I'm a {{ site.author.title }} at
-      <a href="{{ site.author.institution-link }}">{{ site.author.institution }}</a>
-      in the {{ site.author.department }},
+      {{ site.author.institution | markdownify  | remove: '<p>' | remove: '</p>' | strip }}
+      in the {{ site.author.department | markdownify  | remove: '<p>' | remove: '</p>' | strip }},
       working at the intersection of programming language semantics,
-      software verification and proof assistants.
+      compiler correctness and proof assistants.
       I build open-source tools and publish research you can actually use.
     </p>
     <div class="hero-links">

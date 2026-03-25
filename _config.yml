@@ -12,9 +12,8 @@ baseurl: ""   # Leave "" for user/org page; "/repo-name" for project page
 author:
   name: Ghilain Bergeron
   title: Ph.D. Student
-  institution: Inria Nancy
-  institution-link: https://www.inria.fr/fr/centre-inria-universite-lorraine
-  department: Veridis Team
+  institution: "[Inria Nancy](https://www.inria.fr/fr/centre-inria-universite-lorraine)"
+  department: "[VeriDis Team](https://team.inria.fr/veridis/)"
   office: "Building B, Room 206"
 
   # Short hero tagline (appears under your name on the landing section)
