@@ -12,9 +12,9 @@ A clean, minimal academic website combining the typographic elegance of [Brittan
 ### Steps
 
 ```bash
-# 1. Clone your fork
-git clone https://github.com/yourusername/yourusername.github.io.git
-cd yourusername.github.io
+# 1. Clone the repository
+git clone https://github.com/g-bergero/g-bergero.github.io.git
+cd g-bergero.github.io
 
 # 2. Install gems
 bundle install
