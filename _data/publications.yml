@@ -83,7 +83,7 @@
   tags: [Compilation, Formal Verification, PlusCal, Distributed Algorithms, Rewriting]
 
 - title: "HOL Light to Isabelle/HOL translation, rebooted"
-  authors: "**Ghilain Bergeron**, Stéphane Glondu and Sophie Tourret"
+  authors: "**Ghilain Bergeron**, Stéphane Glondu, Sophie Tourret"
   venue: "Isabelle Workshop"
   venue_url: "https://sketis.net/isabelle/isabelle-workshop-2024"
   kind: appeared
