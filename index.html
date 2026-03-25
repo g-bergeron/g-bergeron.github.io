@@ -57,11 +57,11 @@ title: Home
           </div>
           <div class="info-row">
             <span class="info-key">Department</span>
-            <span class="info-val">{{ site.author.department }}</span>
+            <span class="info-val">{{ site.author.department | markdownify  | remove: '<p>' | remove: '</p>' | strip }}</span>
           </div>
           <div class="info-row">
             <span class="info-key">Institution</span>
-            <span class="info-val">{{ site.author.institution }}</span>
+            <span class="info-val">{{ site.author.institution | markdownify  | remove: '<p>' | remove: '</p>' | strip }}</span>
           </div>
           {% if site.author.office and site.author.office != "" %}
           <div class="info-row">
