@@ -13,8 +13,8 @@ A clean, minimal academic website combining the typographic elegance of [Brittan
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/g-bergero/g-bergero.github.io.git
-cd g-bergero.github.io
+git clone https://github.com/g-bergeron/g-bergeron.github.io.git
+cd g-bergeron.github.io
 
 # 2. Install gems
 bundle install
