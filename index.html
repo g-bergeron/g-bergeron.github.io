@@ -1,0 +1,356 @@
+---
+layout: default
+title: Home
+---
+
+<!-- ══════════════════════════════════════
+     § HERO  (site-1 style: pure typography)
+══════════════════════════════════════ -->
+<section id="hero" class="section-hero">
+  <div class="container">
+    <p class="hero-greeting">Hi, my name is</p>
+    <h1 class="hero-name">{{ site.author.name }}</h1>
+    <h2 class="hero-sub">{{ site.author.tagline }}</h2>
+    <p class="hero-desc">
+      I'm a {{ site.author.title }} at
+      <a href="{{ site.author.institution-link }}">{{ site.author.institution }}</a>
+      in the {{ site.author.department }},
+      working at the intersection of programming language semantics,
+      software verification and proof assistants.
+      I build open-source tools and publish research you can actually use.
+    </p>
+    <div class="hero-links">
+      {% if site.social.email and site.social.email != "" %}
+      <a href="mailto:{{ site.social.email }}" class="btn btn-primary">Get in touch</a>
+      {% endif %}
+      <a href="{{ '/assets/cv.pdf' | relative_url }}" class="btn btn-outline" target="_blank"
+        rel="noopener noreferrer">View CV</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § ABOUT
+══════════════════════════════════════ -->
+<section id="about" class="section section-alt">
+  <div class="container">
+    <span class="section-label">01. Who I am</span>
+    <h2 class="section-title">About</h2>
+
+    <div class="about-grid">
+
+      <!-- Left: bio text -->
+      <div class="about-bio-text">
+        {{ site.author.bio | markdownify }}
+      </div>
+
+      <!-- Right: structured info card -->
+      <aside class="about-info-card">
+
+        <!-- Contact / position -->
+        <div class="info-section">
+          <div class="info-label">Info</div>
+          <div class="info-row">
+            <span class="info-key">Position</span>
+            <span class="info-val">{{ site.author.title }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">Department</span>
+            <span class="info-val">{{ site.author.department }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">Institution</span>
+            <span class="info-val">{{ site.author.institution }}</span>
+          </div>
+          {% if site.author.office and site.author.office != "" %}
+          <div class="info-row">
+            <span class="info-key">Office</span>
+            <span class="info-val">{{ site.author.office }}</span>
+          </div>
+          {% endif %}
+          {% if site.social.email and site.social.email != "" %}
+          <div class="info-row">
+            <span class="info-key">Email</span>
+            <span class="info-val">
+              <a href="mailto:{{ site.social.email }}">{{ site.social.email }}</a>
+            </span>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Research interests -->
+        {% if site.author.interests %}
+        <div class="info-section">
+          <div class="info-label">Research Interests</div>
+          <div class="interest-tags">
+            {% for interest in site.author.interests %}
+            <span class="tag">{{ interest }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Education -->
+        {% if site.author.education %}
+        <div class="info-section">
+          <div class="info-label">Education</div>
+          {% for edu in site.author.education %}
+          <div class="edu-item">
+            <div class="edu-degree">{{ edu.degree }}</div>
+            <div class="edu-school">{{ edu.school }}</div>
+            <div class="edu-year">{{ edu.year }}</div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § PUBLICATIONS
+══════════════════════════════════════ -->
+<section id="publications" class="section">
+  <div class="container">
+    <span class="section-label">02. Research</span>
+    <h2 class="section-title">Publications</h2>
+
+    <div class="publications-list">
+      {% for pub in site.data.publications %}
+      <article class="publication-item">
+
+        <h3 class="pub-title">
+          {% assign paper_link = pub.links | where: "label", "Paper" | first %}
+          {% if paper_link %}
+          <a href="{{ paper_link.url }}" target="_blank" rel="noopener noreferrer">{{ pub.title }}</a>
+          {% else %}
+          {{ pub.title }}
+          {% endif %}
+        </h3>
+
+        <p class="pub-authors">{{ pub.authors | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
+        <p class="pub-venue"><em>{{ pub.venue }} ({{ pub.year }})</em></p>
+
+        {% if pub.abstract and pub.abstract != "" %}
+        <details class="pub-abstract">
+          <summary>Abstract</summary>
+          <p>{{ pub.abstract }}</p>
+        </details>
+        {% endif %}
+
+        {% if pub.links %}
+        <div class="pub-links">
+          {% for link in pub.links %}
+          <a href="{{ link.url }}" class="pub-link" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if pub.tags %}
+        <div class="pub-tags">
+          {% for tag in pub.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+        </div>
+        {% endif %}
+
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § TALKS
+══════════════════════════════════════ -->
+<section id="talks" class="section section-alt">
+  <div class="container">
+    <span class="section-label">03. Speaking</span>
+    <h2 class="section-title">Talks</h2>
+
+    <div class="talks-list">
+      {% for talk in site.data.talks %}
+      <article class="talk-item">
+
+        <time class="talk-date">{{ talk.date }}</time>
+
+        <div>
+          <h3 class="talk-title">{{ talk.title }}</h3>
+          <p class="talk-venue">{{ talk.venue }}{% if talk.type %} · <em>{{ talk.type }}</em>{% endif %}</p>
+
+          {% if talk.links %}
+          <div class="talk-links">
+            {% for link in talk.links %}
+            <a href="{{ link.url | relative_url }}" class="talk-link" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § PROJECTS — "Some Things I've Built"
+     (featured alternating + other grid)
+══════════════════════════════════════ -->
+<section id="projects" class="section">
+  <div class="container">
+    <span class="section-label">04. My Work</span>
+    <h2 class="section-title">Some Things I've Built</h2>
+
+    <!-- ── Featured projects ── -->
+    {% assign featured = site.data.projects | where: "featured", true %}
+    <div class="featured-projects">
+      {% for project in featured %}
+      <article class="featured-project">
+
+        <!-- Screenshot / placeholder — uses Socialify auto-card if no custom image set -->
+        <div class="fp-image">
+          {% if project.image and project.image != "" %}
+          <img src="{{ '/assets/img/' | append: project.image | relative_url }}" alt="{{ project.name }} screenshot"
+            loading="lazy" />
+          {% elsif project.github and project.github != "" %}
+          <img class="fp-socialify"
+            src="https://socialify.git.ci/{{ project.github }}/image?font=KoHo&forks=1&issues=1&language=1&name=1&pattern=Circuit+Board&pulls=1&stargazers=1&theme=Auto"
+            data-repo="{{ project.github }}" alt="{{ project.name }} — GitHub repository card" loading="lazy"
+            onerror="this.parentNode.innerHTML=document.getElementById('fp-dead-page').innerHTML" />
+          {% else %}
+          <div class="fp-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Text content -->
+        <div class="fp-content">
+          <!-- <p class="fp-label">Featured Project</p> -->
+          <h3 class="fp-title">
+            {% if project.github and project.github != "" %}
+            <a href="https://github.com/{{ project.github }}" target="_blank" rel="noopener noreferrer">{{ project.name }}</a>
+            {% elsif project.demo and project.demo != "" %}
+            <a href="{{ project.demo }}" target="_blank" rel="noopener noreferrer">{{ project.name }}</a>
+            {% else %}
+            {{ project.name }}
+            {% endif %}
+          </h3>
+
+          <div class="fp-desc">{{ project.description }}</div>
+
+          {% if project.tech %}
+          <ul class="fp-tech">
+            {% for t in project.tech %}<li>{{ t }}</li>{% endfor %}
+          </ul>
+          {% endif %}
+
+          <div class="fp-links">
+            {% if project.github and project.github != "" %}
+            <a href="https://github.com/{{ project.github }}" aria-label="GitHub repo for {{ project.name }}"
+              target="_blank" rel="noopener noreferrer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+                aria-hidden="true">
+                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207
+                  11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416
+                  -4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083
+                  -.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834
+                  2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305
+                  -5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124
+                  -.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509
+                  11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552
+                  3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84
+                  1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43
+                  .372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566
+                  21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+              </svg>
+            </a>
+            {% endif %}
+            {% if project.demo and project.demo != "" %}
+            <a href="{{ project.demo }}" aria-label="Live demo for {{ project.name }}" target="_blank"
+              rel="noopener noreferrer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+
+      </article>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § EXPERIENCE
+══════════════════════════════════════ -->
+<section id="experience" class="section section-alt">
+  <div class="container">
+    <span class="section-label">05. Background</span>
+    <h2 class="section-title">Experience</h2>
+
+    <div class="experience-timeline">
+      {% for item in site.data.experience %}
+      <div class="timeline-item">
+        <div class="timeline-left">
+          <span class="timeline-date">{{ item.date }}</span>
+        </div>
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-right">
+          <h3 class="timeline-title">{{ item.title }}</h3>
+          <p class="timeline-institution">
+            {% if item.url and item.url != "" %}
+            <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.institution }}</a>
+            {% else %}
+            {{ item.institution }}
+            {% endif %}
+          </p>
+          {% if item.description %}
+          <p class="timeline-description">
+            {{ item.description | markdownify | remove: '<p>' | remove: '</p>' | strip }}
+          </p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § CONTACT
+══════════════════════════════════════ -->
+<section id="contact" class="section section-contact">
+  <div class="container">
+    <span class="section-label">06. What's Next?</span>
+    <h2 class="section-title">Get In Touch</h2>
+    <p class="contact-text">
+      I'm always happy to chat about research, collaborations, or just
+      interesting ideas. Whether you have a question or just want to say hi,
+      my inbox is open.
+    </p>
+    {% if site.social.email and site.social.email != "" %}
+    <a href="mailto:{{ site.social.email }}" class="btn btn-primary btn-large">Say Hello</a>
+    {% endif %}
+  </div>
+</section>

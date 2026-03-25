@@ -1,0 +1,324 @@
+// ════════════════════════════════════════
+// Navigation Bar
+// ════════════════════════════════════════
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  z-index: 200;
+  // Always opaque on mobile; frosted on desktop when scrolled
+  background: transparent;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+
+  &.scrolled {
+    background: var(--color-bg-nav);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--color-border), var(--shadow-sm);
+  }
+
+  // On mobile the nav is always solid so content under it doesn't show through
+  @media (max-width: 768px) {
+    background: var(--color-bg-nav) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--color-border);
+  }
+}
+
+.nav-container {
+  height: 100%;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    padding: 0 24px;
+  }
+}
+
+// ── Logo / Name ──────────────────────────
+.nav-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  transition: var(--transition);
+  flex-shrink: 0;
+  z-index: 210;
+
+  .logo-text {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+
+  }
+
+  &:hover {
+    color: var(--color-accent);
+    background: var(--color-accent-dim);
+  }
+}
+
+// ── Right side of nav (links + dark toggle) ────────
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+// ── Desktop nav links ────────────────────
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  ol {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li a {
+      display: inline-block;
+      padding: 7px 13px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text);
+      text-decoration: none;
+      border-radius: 4px;
+      transition: var(--transition);
+
+      span {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-accent);
+        margin-right: 4px;
+      }
+
+      &:hover,
+      &.active {
+        color: var(--color-accent);
+        background: var(--color-accent-dim);
+        opacity: 1;
+      }
+    }
+  }
+
+  .nav-cv {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 12px;
+    padding: 7px 18px;
+    font-size: 13px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--color-accent);
+    border: 1.5px solid var(--color-accent);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: var(--transition);
+
+    &:hover {
+      background: var(--color-accent-dim);
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+// ── Dark mode toggle ─────────────────────
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  transition: var(--transition);
+  flex-shrink: 0;
+  z-index: 210;
+
+  &:hover {
+    color: var(--color-accent);
+    background: var(--color-accent-dim);
+  }
+
+  .icon-sun {
+    display: block;
+  }
+
+  .icon-moon {
+    display: none;
+  }
+
+  [data-theme="dark"] & {
+    .icon-sun {
+      display: none;
+    }
+
+    .icon-moon {
+      display: block;
+    }
+  }
+}
+
+// ── Hamburger button ─────────────────────
+.hamburger {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 210; // always above overlay
+  transition: var(--transition);
+
+  .hamburger-line {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-text);
+    border-radius: 2px;
+    transition: var(--transition);
+    transform-origin: center;
+  }
+
+  &.open {
+    .line1 {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .line2 {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .line3 {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+}
+
+// ── Mobile full-screen overlay ────────────
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  // Push the top edge down past the navbar so the logo/X button stay visible
+  padding-top: var(--nav-height);
+  background: var(--color-bg);
+  z-index: 190; // below navbar (z:200) so the logo and X show on top
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    width: 100%;
+    padding: 0 40px;
+
+    ol {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+      padding: 0;
+      width: 100%;
+
+      li a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        font-family: var(--font-display);
+        font-size: clamp(20px, 5vw, 28px);
+        font-weight: 600;
+        color: var(--color-text);
+        text-decoration: none;
+        transition: var(--transition);
+
+        span {
+          font-family: var(--font-mono);
+          font-size: 12px;
+          color: var(--color-accent);
+        }
+
+        &:hover {
+          color: var(--color-accent);
+          opacity: 1;
+        }
+      }
+    }
+
+    .btn-outline-mobile {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 28px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-accent);
+      border: 1.5px solid var(--color-accent);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: var(--transition);
+
+      &:hover {
+        background: var(--color-accent-dim);
+        opacity: 1;
+      }
+    }
+  }
+
+  // Only show on mobile
+  @media (min-width: 769px) {
+    display: none !important;
+  }
+}
+
+body.menu-open {
+  overflow: hidden;
+}

@@ -1,0 +1,47 @@
+# ─────────────────────────────────────────────────────────────
+# Experience (reverse chronological)
+# url is optional; remove the key to omit the hyperlink
+# ─────────────────────────────────────────────────────────────
+
+- title:       "Ph.D. Student"
+  institution: "University of Lorraine — Inria Nancy — Veridis Team"
+  url:         "https://team.inria.fr/veridis/"
+  date:        "Oct 2023–present"
+  description: >
+    Advised by Prof. Horatiu Cirstea and Prof. Stephan Merz. 
+    Research on a formally verified compiler for Distributed PlusCal targetting
+    Go.
+    Teaching assistant for a Functional Programming Course in Haskell (2023-2024).
+
+- title:       "Research Intern"
+  institution: "University of Lorraine — Inria Nancy — Veridis Team"
+  url:         "https://team.inria.fr/veridis/"
+  date:        "Mar–Aug 2023"
+  description: >
+    Formalization of a splitting framework for saturation-based calculi in Isabelle/HOL
+    under the supervision of Sophie Tourret.
+
+- title:       "M.Sc. in Computer Science"
+  institution: "University of Lorraine — Faculté des Sciences et Technologies"
+  url:         ""
+  date:        "2021–2023"
+
+- title:       "Research Intern"
+  institution: "University of Lorraine — Inria Nancy — MFX Team"
+  url:         "https://mfx.loria.fr/"
+  date:        "Jun 2021–Aug 2021"
+  description: >
+    Development of a formal verification pipeline, including various primitives in the language,
+    for [Silice](https://github.com/sylefeb/Silice), a hardware description language.
+
+- title:       "Research Intern"
+  institution: "University of Lorraine — Inria Nancy — MFX Team"
+  url:         "https://mfx.loria.fr/"
+  date:        "Apr 2020–Jun 2020"
+  description: >
+    Development of a tool for automatic "parameterization" of 2D-modeling scripts written in Lua.
+
+- title:       "B.Sc. in Computer Science"
+  institution: "University of Lorraine — IUT Nancy-Charlemagne & Faculté des Sciences et Technologies"
+  url:         ""
+  date:        "2018–2021"

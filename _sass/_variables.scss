@@ -1,0 +1,70 @@
+// ════════════════════════════════════════
+// Design Tokens — Magenta Rose  (light)
+// ════════════════════════════════════════
+
+:root {
+  // Backgrounds
+  --color-bg: #ffffff;
+  --color-bg-alt: #f7eef4; // warm blush
+  --color-bg-nav: rgba(255, 255, 255, 0.93);
+
+  // Text
+  --color-text: #1f1117; // near-black with a warm magenta tint
+  --color-text-muted: #7a5568; // warm mauve-grey
+
+  // Accent
+  --color-accent: #a1246b;
+  --color-accent-dim: #f5dcea; // slightly deeper blush tint
+
+  // Borders & cards
+  --color-border: #e5ccd9; // warm rose border
+  --color-card: #ffffff;
+
+  // Featured project panel
+  --color-fp-bg: #f7eef4;
+  --color-fp-border: #e8bdd3;
+
+  // Typography
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'Fira Code', 'Courier New', monospace;
+
+  // Layout
+  --nav-height: 68px;
+  --container-max: 960px;
+
+  // Motion
+  --transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  --transition-slow: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  // Shadows
+  --shadow-sm: 0 1px 3px rgba(100, 20, 60, .07), 0 1px 2px rgba(100, 20, 60, .05);
+  --shadow: 0 4px 20px rgba(100, 20, 60, .10);
+  --shadow-lg: 0 10px 40px rgba(100, 20, 60, .14);
+}
+
+// ════════════════════════════════════════
+// Dark mode — deep wine
+// ════════════════════════════════════════
+
+[data-theme="dark"] {
+  --color-bg: #1c0912;
+  --color-bg-alt: #250e19;
+  --color-bg-nav: rgba(28, 9, 18, 0.93);
+
+  --color-text: #f0d6e8;
+  --color-text-muted: #c891b0;
+
+  --color-accent: #d4609a; // lighter magenta for dark bg
+  --color-accent-dim: #3d1428;
+
+  --color-border: #3d1428;
+  --color-card: #2a0e1e;
+
+  --color-fp-bg: #250e19;
+  --color-fp-border: #3d1428;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, .45);
+  --shadow: 0 4px 20px rgba(0, 0, 0, .55);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, .65);
+}

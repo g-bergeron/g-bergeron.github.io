@@ -1,0 +1,35 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Projects
+#
+# featured: true  →  large alternating layout ("Some Things I've Built")
+#                    image: path relative to /assets/img/ (optional)
+#
+# featured: false →  small card in the "Other Noteworthy Projects" grid
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Featured ──────────────────────────────────────────────────────────────────
+
+- name: "Fugue"
+  featured: true
+  image: ""
+  description: >
+    🎼 A compiler to native Go code for Distributed PlusCal, an extension of Lamport's PlusCal featuring channels and other distributed features.
+  github: "mesabloo/fugue"
+  demo: ""
+  tech: [Lean 4, Distributed PlusCal, Go]
+
+- name: "Rainbow Beamer theme"
+  featured: true
+  image: ""
+  description: >
+    A simple colorful beamer theme.
+  github: "mesabloo/beamer-theme"
+  tech: [LaTeX]
+
+- name: "Zilch, N*"
+  featured: true 
+  image: "zilch.png"
+  description: >
+    A low-level functional programming language based on algebraic effects and quantitative type theory, compiling to a custom cross-platform typed assembly language.
+  github: "zilch-lang"
+  tech: [Haskell, Isabelle/HOL, Assembly, Agda]
