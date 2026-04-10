@@ -22,6 +22,18 @@
   #     url: "https://hal.science/hal-05329156/"
   tags: [Compilation, Formal Verification, Lean 4, PlusCal, Distributed Algorithms, Rewriting]
 
+- title: "Encoding Network PlusCal into the Join Calculus"
+  authors: "**Ghilain Bergeron**"
+  venue: ""
+  kind: submitted 
+  year: 2026
+  abstract: |
+    We present a compilation scheme from Network PlusCal, a dialect of PlusCal equipped with explicit network communication primitives, to the Join Calculus. 
+    This scheme maps each Network PlusCal process to a Join Calculus program that encodes local variables as local state atoms and control flow as a family of guarded reactions. 
+    Mutual exclusion among non-deterministic branches of atomic blocks is enforced by a per-block nullary atom that is consumed once a branch succeeds. 
+    We illustrate this scheme on a Ping-Pong example involving a server and multiple client processes.
+  tags: [PlusCal, Join Calculus, Encoding]
+
 - title: "BARReL: A modern backend for Atelier B in Lean"
   authors: "**Ghilain Bergeron**, Vincent Trélat"
   venue: ""
