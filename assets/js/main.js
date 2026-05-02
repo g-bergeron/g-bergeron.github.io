@@ -140,6 +140,72 @@
 
 
 // ════════════════════════════════════════
+// CV download links (fetched from GitHub Releases API)
+// The fetch is fired immediately so it runs in parallel with page load.
+// Once both the fetch settles and the DOM is ready, all [data-cv-link]
+// anchors get the resolved href — or are greyed out on error/timeout.
+// ════════════════════════════════════════
+(function () {
+  var API_URL  = 'https://api.github.com/repos/mesabloo/academic-cv/releases/latest';
+  var ASSET    = 'resume.pdf';
+  var TIMEOUT  = 5000;
+
+  // Fire the network request immediately (parallel to page rendering).
+  var fetchPromise = new Promise(function (resolve, reject) {
+    var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = setTimeout(function () {
+      if (controller) controller.abort();
+      reject(new Error('timeout'));
+    }, TIMEOUT);
+
+    fetch(API_URL, controller ? { signal: controller.signal } : {})
+      .then(function (res) {
+        clearTimeout(timer);
+        if (!res.ok) { reject(new Error('http ' + res.status)); return; }
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data) return;
+        var assets = data.assets || [];
+        for (var i = 0; i < assets.length; i++) {
+          if (assets[i].name === ASSET) {
+            resolve(assets[i].browser_download_url);
+            return;
+          }
+        }
+        reject(new Error('asset not found'));
+      })
+      .catch(function (err) {
+        clearTimeout(timer);
+        reject(err);
+      });
+  });
+
+  function applyToCvLinks(url) {
+    document.querySelectorAll('[data-cv-link]').forEach(function (el) {
+      if (url) {
+        el.href = url;
+      } else {
+        el.removeAttribute('href');
+        el.classList.add('cv-unavailable');
+      }
+    });
+  }
+
+  // Wait for the DOM, then apply whatever the fetch returned.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      fetchPromise.then(function (url) { applyToCvLinks(url); })
+                  .catch(function ()    { applyToCvLinks(null); });
+    });
+  } else {
+    fetchPromise.then(function (url) { applyToCvLinks(url); })
+                .catch(function ()    { applyToCvLinks(null); });
+  }
+})();
+
+
+// ════════════════════════════════════════
 // Socialify dark/light theme swap
 // Updates the ?theme= param on .fp-socialify images whenever
 // the colour scheme changes.

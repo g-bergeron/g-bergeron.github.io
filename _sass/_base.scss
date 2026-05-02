@@ -182,6 +182,12 @@ ol {
   }
 }
 
+[data-cv-link].cv-unavailable {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
+
 // ════════════════════════════════════════
 // Tag pill
 // ════════════════════════════════════════

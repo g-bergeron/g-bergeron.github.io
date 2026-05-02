@@ -23,7 +23,7 @@ title: Home
       {% if site.social.email and site.social.email != "" %}
       <a href="mailto:{{ site.social.email }}" class="btn btn-primary">Get in touch</a>
       {% endif %}
-      <a href="{{ '/assets/cv.pdf' | relative_url }}" class="btn btn-outline" target="_blank"
+      <a data-cv-link class="btn btn-outline" target="_blank"
         rel="noopener noreferrer">View CV</a>
     </div>
   </div>
