@@ -2,9 +2,18 @@
 # Talks, invited presentations, seminars, guest lectures, etc.
 # ─────────────────────────────────────────────────────────────
 
+- title: "Encoding Network PlusCal into the Join Calculus"
+  venue: "Approches Formelles pour l'Assistance au Développement de Logiciels (AFADL)"
+  date: "Jun 2026"
+  categories: [conference]
+  links:
+    - label: Slides
+      url: "/assets/slides/AFADL-2026.pdf"
+
 - title: "Sémantique Dénotationnelle, espaces métriques et Go"
   venue: "Journées LVP du GDR SciLog du CNRS"
   date: "Nov 2025"
+  categories: [seminar]
   links:
     - label: Slides
       url: "/assets/slides/LVP-2025.pdf"
@@ -12,6 +21,7 @@
 - title: "Towards a verified compiler for Distributed PlusCal"
   venue: "VeriDis retreat"
   date: "Sep 2025"
+  categories: [seminar]
   links: 
     - label: Slides
       url: "/assets/slides/WPTE-2025.pdf"
@@ -19,6 +29,7 @@
 - title: "Towards a verified compiler for Distributed PlusCal"
   venue: "11th International Workshop on Rewriting Techniques for Program Transformations and Evaluation"
   date: "Jul 2025"
+  categories: [workshop]
   type: Main Workshop Talk
   links: 
     - label: Slides
@@ -27,6 +38,7 @@
 - title: "Compilation vérifiée de spécifications d'algorithmes distribués"
   venue: "Journées LVP du GDR SciLog du CNRS"
   date: "Nov 2024"
+  categories: [seminar]
   links:
     - label: Slides
       url: "/assets/slides/LVP-2024.pdf"
@@ -34,6 +46,7 @@
 - title: "An encoding of Distributed PlusCal in the Join Calculus"
   venue: "VINO'24"
   date: "Aug 2024"
+  categories: [seminar]
   links: 
     - label: Slides
       url: "/assets/slides/VINO-2024.pdf"
@@ -41,6 +54,7 @@
 - title: "An encoding of Distributed PlusCal in the Join Calculus"
   venue: "VeriDis retreat"
   date: "Jun 2024"
+  categories: [seminar]
   links: 
     - label: Slides
       url: "/assets/slides/VINO-2024.pdf"

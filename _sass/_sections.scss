@@ -623,6 +623,240 @@
 
 
 // ════════════════════════════════════════
+// Category filters, pills & horizontal scroll pane
+// (shared by Publications and Talks)
+// ════════════════════════════════════════
+
+// Light-mode category colors
+$cat-conference-bg: #e6f1fb;
+$cat-conference-fg: #0c447c;
+$cat-workshop-bg: #eaf3de;
+$cat-workshop-fg: #27500a;
+$cat-seminar-bg: #faece7;
+$cat-seminar-fg: #712b13;
+$cat-journal-bg: #fbeaf0;
+$cat-journal-fg: #72243e;
+
+// Dark-mode category colors
+$cat-conference-bg-dark: #0c447c;
+$cat-conference-fg-dark: #b5d4f4;
+$cat-workshop-bg-dark: #27500a;
+$cat-workshop-fg-dark: #c0dd97;
+$cat-seminar-bg-dark: #712b13;
+$cat-seminar-fg-dark: #f5c4b3;
+$cat-journal-bg-dark: #72243e;
+$cat-journal-fg-dark: #f4c0d1;
+
+.cat-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.cat-filter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: var(--transition);
+
+  &-conference { background: $cat-conference-bg; color: $cat-conference-fg; }
+  &-workshop   { background: $cat-workshop-bg;   color: $cat-workshop-fg; }
+  &-seminar    { background: $cat-seminar-bg;    color: $cat-seminar-fg; }
+  &-journal    { background: $cat-journal-bg;    color: $cat-journal-fg; }
+
+  &.active {
+    &.cat-filter-conference { background: $cat-conference-fg; color: $cat-conference-bg; }
+    &.cat-filter-workshop   { background: $cat-workshop-fg;   color: $cat-workshop-bg; }
+    &.cat-filter-seminar    { background: $cat-seminar-fg;    color: $cat-seminar-bg; }
+    &.cat-filter-journal    { background: $cat-journal-fg;    color: $cat-journal-bg; }
+  }
+}
+
+[data-theme="dark"] .cat-filter {
+  &-conference { background: $cat-conference-bg-dark; color: $cat-conference-fg-dark; }
+  &-workshop   { background: $cat-workshop-bg-dark;   color: $cat-workshop-fg-dark; }
+  &-seminar    { background: $cat-seminar-bg-dark;    color: $cat-seminar-fg-dark; }
+  &-journal    { background: $cat-journal-bg-dark;    color: $cat-journal-fg-dark; }
+
+  &.active {
+    &.cat-filter-conference { background: $cat-conference-fg-dark; color: $cat-conference-bg-dark; }
+    &.cat-filter-workshop   { background: $cat-workshop-fg-dark;   color: $cat-workshop-bg-dark; }
+    &.cat-filter-seminar    { background: $cat-seminar-fg-dark;    color: $cat-seminar-bg-dark; }
+    &.cat-filter-journal    { background: $cat-journal-fg-dark;    color: $cat-journal-bg-dark; }
+  }
+}
+
+.cat-filter-clear {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px dashed var(--color-border);
+  border-radius: 999px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: var(--transition);
+
+  &:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-muted);
+  }
+}
+
+.cat-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.cat-pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+
+  &-conference { background: $cat-conference-bg; color: $cat-conference-fg; }
+  &-workshop   { background: $cat-workshop-bg;   color: $cat-workshop-fg; }
+  &-seminar    { background: $cat-seminar-bg;    color: $cat-seminar-fg; }
+  &-journal    { background: $cat-journal-bg;    color: $cat-journal-fg; }
+}
+
+[data-theme="dark"] .cat-pill {
+  &-conference { background: $cat-conference-bg-dark; color: $cat-conference-fg-dark; }
+  &-workshop   { background: $cat-workshop-bg-dark;   color: $cat-workshop-fg-dark; }
+  &-seminar    { background: $cat-seminar-bg-dark;    color: $cat-seminar-fg-dark; }
+  &-journal    { background: $cat-journal-bg-dark;    color: $cat-journal-fg-dark; }
+}
+
+.scroll-empty {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 28px 0;
+  border: 1px dashed var(--color-border);
+  border-radius: 8px;
+}
+
+.scroll-pane {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scroll-arrow {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--color-accent);
+  background: transparent;
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+
+  &:hover {
+    background: var(--color-accent-dim);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
+.scroll-pane-window {
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
+}
+
+.scroll-pane-track {
+  --card-width: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, auto);
+  grid-auto-columns: var(--card-width);
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+.scroll-pane-track .publication-item,
+.scroll-pane-track .talk-item {
+  scroll-snap-align: start;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  &:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+.scroll-pane-track .talk-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .talk-date {
+    padding-top: 0;
+  }
+}
+
+.scroll-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 16px;
+
+  span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-border);
+    display: inline-block;
+    transition: var(--transition);
+
+    &.active {
+      background: var(--color-accent);
+    }
+  }
+
+  &.hidden {
+    display: none;
+  }
+}
+
+
+// ════════════════════════════════════════
 // Projects — "Some Things I've Built"
 // Inspired by v4.brittanychiang.com
 // ════════════════════════════════════════

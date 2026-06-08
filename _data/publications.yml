@@ -9,6 +9,7 @@
   venue_url: "https://www.sciencedirect.com/journal/journal-of-logical-and-algebraic-methods-in-programming"
   kind: to appear
   year: 2026
+  categories: [journal]
   abstract: |
     Formal verification techniques are frequently used to ensure correctness properties of distributed systems and algorithms. 
     However, languages used for formal modeling and verification are often substantially different from languages used in software 
@@ -47,6 +48,7 @@
   venue_url: "https://afadl2026.sciencesconf.org/"
   kind: appeared
   year: 2026
+  categories: [conference]
   abstract: |
     We present a compilation scheme from Network PlusCal, a dialect of PlusCal equipped with explicit network communication primitives, to the Join Calculus. 
     This scheme maps each Network PlusCal process to a Join Calculus program that encodes local variables as local state atoms and control flow as a family of guarded reactions. 
@@ -63,6 +65,7 @@
   venue_url: "https://icetcs.github.io/frocos-itp-tableaux25/itp/"
   kind: appeared
   year: 2025
+  categories: [conference]
   abstract: |
     We describe the formalization in Isabelle/HOL of a framework for splitting, a theorem proving
     technique that extends saturation-based calculi with branching abilities. The framework preserves
@@ -83,6 +86,7 @@
   venue_url: "https://wpte2025.github.io/"
   kind: appeared
   year: 2025
+  categories: [workshop]
   abstract: |
     Formal verification techniques are frequently used to ensure correctness properties of distributed systems and algorithms. 
     However, languages used for formal modeling and verification are often substantially different from languages used in software 
@@ -104,6 +108,7 @@
   venue_url: "https://sketis.net/isabelle/isabelle-workshop-2024"
   kind: appeared
   year: 2024
+  categories: [workshop]
   abstract: |
     This paper is a report on the use of a ten-year-old proof translation
     technique from HOL Light to Isabelle/HOL. We demonstrate the

@@ -120,65 +120,94 @@ title: Home
     <span class="section-label">02. Research</span>
     <h2 class="section-title">Publications</h2>
 
-    <div class="publications-list">
-      {% for pub in site.data.publications %}
-      <article class="publication-item">
+    <div class="cat-filter-bar" data-target="publications-track">
+      <button type="button" class="cat-filter cat-filter-conference" data-category="conference">Conference</button>
+      <button type="button" class="cat-filter cat-filter-workshop" data-category="workshop">Workshop</button>
+      <button type="button" class="cat-filter cat-filter-journal" data-category="journal">Journal</button>
+      <button type="button" class="cat-filter-clear">Clear</button>
+    </div>
 
-        <h3 class="pub-title">
-          {% assign paper_link = pub.links | where: "label", "Paper" | first %}
-          {% if paper_link %}
-          <a href="{{ paper_link.url }}" target="_blank" rel="noopener noreferrer">{{ pub.title }}</a>
-          {% else %}
-          {{ pub.title }}
-          {% endif %}
-        </h3>
+    <p class="scroll-empty" hidden>No items match the selected filters.</p>
 
-        <p class="pub-authors">{{ pub.authors | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
-        <p class="pub-venue">
-          {% assign pub_kind = pub.kind %}
-          {% if pub_kind == "appeared" %}
-            In:
-          {% elsif pub_kind == "to appear" %}
-            To appear in:
-          {% elsif pub_kind == "submitted" %}
-            <em>Submitted</em>
-          {% endif %}
-          <em>
-            {% if pub.venue_url %}
-            <a href="{{ pub.venue_url }}">
+    <div class="scroll-pane">
+      <button type="button" class="scroll-arrow scroll-arrow-prev" aria-label="Previous">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+
+      <div class="scroll-pane-window">
+        <div class="scroll-pane-track" id="publications-track">
+          {% for pub in site.data.publications %}
+          <article class="publication-item"{% if pub.categories %} data-categories="{{ pub.categories | join: ' ' }}"{% endif %}>
+
+            {% if pub.categories %}
+            <div class="cat-pills">
+              {% for cat in pub.categories %}<span class="cat-pill cat-pill-{{ cat }}">{{ cat | capitalize }}</span>{% endfor %}
+            </div>
             {% endif %}
-              {{ pub.venue | markdownify | remove: '<p>' | remove: '</p>' | strip }}
-            {% if pub.venue_url %}
-            </a>
-            {% endif %} 
-            ({{ pub.year }})
-          </em>
-        </p>
 
-        {% if pub.abstract and pub.abstract != "" %}
-        <details class="pub-abstract">
-          <summary>Abstract</summary>
-          <p>{{ pub.abstract }}</p>
-        </details>
-        {% endif %}
+            <h3 class="pub-title">
+              {% assign paper_link = pub.links | where: "label", "Paper" | first %}
+              {% if paper_link %}
+              <a href="{{ paper_link.url }}" target="_blank" rel="noopener noreferrer">{{ pub.title }}</a>
+              {% else %}
+              {{ pub.title }}
+              {% endif %}
+            </h3>
 
-        {% if pub.links %}
-        <div class="pub-links">
-          {% for link in pub.links %}
-          <a href="{{ link.url }}" class="pub-link" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+            <p class="pub-authors">{{ pub.authors | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
+            <p class="pub-venue">
+              {% assign pub_kind = pub.kind %}
+              {% if pub_kind == "appeared" %}
+                In:
+              {% elsif pub_kind == "to appear" %}
+                To appear in:
+              {% elsif pub_kind == "submitted" %}
+                <em>Submitted</em>
+              {% endif %}
+              <em>
+                {% if pub.venue_url %}
+                <a href="{{ pub.venue_url }}">
+                {% endif %}
+                  {{ pub.venue | markdownify | remove: '<p>' | remove: '</p>' | strip }}
+                {% if pub.venue_url %}
+                </a>
+                {% endif %}
+                ({{ pub.year }})
+              </em>
+            </p>
+
+            {% if pub.abstract and pub.abstract != "" %}
+            <details class="pub-abstract">
+              <summary>Abstract</summary>
+              <p>{{ pub.abstract }}</p>
+            </details>
+            {% endif %}
+
+            {% if pub.links %}
+            <div class="pub-links">
+              {% for link in pub.links %}
+              <a href="{{ link.url }}" class="pub-link" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if pub.tags %}
+            <div class="pub-tags">
+              {% for tag in pub.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+            </div>
+            {% endif %}
+
+          </article>
           {% endfor %}
         </div>
-        {% endif %}
+      </div>
 
-        {% if pub.tags %}
-        <div class="pub-tags">
-          {% for tag in pub.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
-        </div>
-        {% endif %}
-
-      </article>
-      {% endfor %}
+      <button type="button" class="scroll-arrow scroll-arrow-next" aria-label="Next">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
     </div>
+
+    <div class="scroll-dots" aria-hidden="true"></div>
   </div>
 </section>
 
@@ -191,28 +220,57 @@ title: Home
     <span class="section-label">03. Speaking</span>
     <h2 class="section-title">Talks</h2>
 
-    <div class="talks-list">
-      {% for talk in site.data.talks %}
-      <article class="talk-item">
-
-        <time class="talk-date">{{ talk.date }}</time>
-
-        <div>
-          <h3 class="talk-title">{{ talk.title }}</h3>
-          <p class="talk-venue">{{ talk.venue }}{% if talk.type %} · <em>{{ talk.type }}</em>{% endif %}</p>
-
-          {% if talk.links %}
-          <div class="talk-links">
-            {% for link in talk.links %}
-            <a href="{{ link.url | relative_url }}" class="talk-link" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
-            {% endfor %}
-          </div>
-          {% endif %}
-        </div>
-
-      </article>
-      {% endfor %}
+    <div class="cat-filter-bar" data-target="talks-track">
+      <button type="button" class="cat-filter cat-filter-conference" data-category="conference">Conference</button>
+      <button type="button" class="cat-filter cat-filter-workshop" data-category="workshop">Workshop</button>
+      <button type="button" class="cat-filter cat-filter-seminar" data-category="seminar">Seminar</button>
+      <button type="button" class="cat-filter-clear">Clear</button>
     </div>
+
+    <p class="scroll-empty" hidden>No items match the selected filters.</p>
+
+    <div class="scroll-pane">
+      <button type="button" class="scroll-arrow scroll-arrow-prev" aria-label="Previous">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+
+      <div class="scroll-pane-window">
+        <div class="scroll-pane-track" id="talks-track">
+          {% for talk in site.data.talks %}
+          <article class="talk-item"{% if talk.categories %} data-categories="{{ talk.categories | join: ' ' }}"{% endif %}>
+
+            {% if talk.categories %}
+            <div class="cat-pills">
+              {% for cat in talk.categories %}<span class="cat-pill cat-pill-{{ cat }}">{{ cat | capitalize }}</span>{% endfor %}
+            </div>
+            {% endif %}
+
+            <time class="talk-date">{{ talk.date }}</time>
+
+            <div>
+              <h3 class="talk-title">{{ talk.title }}</h3>
+              <p class="talk-venue">{{ talk.venue }}{% if talk.type %} · <em>{{ talk.type }}</em>{% endif %}</p>
+
+              {% if talk.links %}
+              <div class="talk-links">
+                {% for link in talk.links %}
+                <a href="{{ link.url | relative_url }}" class="talk-link" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      <button type="button" class="scroll-arrow scroll-arrow-next" aria-label="Next">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+
+    <div class="scroll-dots" aria-hidden="true"></div>
   </div>
 </section>
 

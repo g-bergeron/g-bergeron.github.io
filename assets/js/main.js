@@ -233,3 +233,145 @@
     });
   }
 })();
+
+
+// ════════════════════════════════════════
+// Publications / Talks: category filters
+// + horizontally scrolling pane
+// ════════════════════════════════════════
+(function () {
+  var bars = document.querySelectorAll('.cat-filter-bar');
+  if (!bars.length) return;
+
+  var MIN_CARD_WIDTH = 240; // px — below 2x this + gap, collapse to a single column
+
+  bars.forEach(function (bar) {
+    var trackId = bar.getAttribute('data-target');
+    var track = document.getElementById(trackId);
+    if (!track) return;
+
+    var pane = track.closest('.scroll-pane');
+    var section = bar.parentElement;
+    var emptyMsg = section.querySelector('.scroll-empty');
+    var dotsWrap = section.querySelector('.scroll-dots');
+    var prevBtn = pane.querySelector('.scroll-arrow-prev');
+    var nextBtn = pane.querySelector('.scroll-arrow-next');
+    var filterBtns = bar.querySelectorAll('.cat-filter');
+    var clearBtn = bar.querySelector('.cat-filter-clear');
+    var cards = track.children;
+    var active = [];
+
+    function visibleCards() {
+      return Array.prototype.filter.call(cards, function (c) {
+        return c.style.display !== 'none';
+      });
+    }
+
+    function columnCount() {
+      return (track.clientWidth >= MIN_CARD_WIDTH * 2 + 20) ? 2 : 1;
+    }
+
+    function applyColumnMode() {
+      var cols = columnCount();
+      var gap = 20;
+
+      // Fixed pixel card width: avoids percentage-based sizing entirely, so
+      // the browser cannot redistribute space across more tracks than intended.
+      var cardWidth = (track.clientWidth - gap * (cols - 1)) / cols;
+      track.style.setProperty('--card-width', cardWidth + 'px');
+    }
+
+    function pageWidth() {
+      var v = visibleCards();
+      if (!v.length) return track.clientWidth;
+      return v[0].getBoundingClientRect().width + 20;
+    }
+
+    function buildDots() {
+      dotsWrap.innerHTML = '';
+      var v = visibleCards();
+      var perPage = columnCount() * 2;
+      var pages = Math.ceil(v.length / perPage);
+      dotsWrap.classList.toggle('hidden', pages <= 1);
+      for (var i = 0; i < pages; i++) {
+        var d = document.createElement('span');
+        if (i === 0) d.classList.add('active');
+        dotsWrap.appendChild(d);
+      }
+    }
+
+    function updateDots() {
+      var pw = pageWidth() * columnCount();
+      var idx = pw ? Math.round(track.scrollLeft / pw) : 0;
+      var dots = dotsWrap.children;
+      for (var i = 0; i < dots.length; i++) {
+        dots[i].classList.toggle('active', i === idx);
+      }
+    }
+
+    function updateArrows() {
+      prevBtn.disabled = track.scrollLeft <= 4;
+      nextBtn.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+      updateDots();
+    }
+
+    function applyFilters() {
+      var anyVisible = false;
+      Array.prototype.forEach.call(cards, function (card) {
+        var cats = (card.getAttribute('data-categories') || '').split(' ');
+        var match = active.length === 0 || active.every(function (a) {
+          return cats.indexOf(a) !== -1;
+        });
+        card.style.display = match ? 'flex' : 'none';
+        if (match) anyVisible = true;
+      });
+
+      if (emptyMsg) emptyMsg.hidden = anyVisible;
+      pane.style.display = anyVisible ? 'flex' : 'none';
+
+      track.scrollTo({ left: 0 });
+      applyColumnMode();
+      buildDots();
+      updateArrows();
+    }
+
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var cat = btn.getAttribute('data-category');
+        var idx = active.indexOf(cat);
+        if (idx === -1) {
+          active.push(cat);
+          btn.classList.add('active');
+        } else {
+          active.splice(idx, 1);
+          btn.classList.remove('active');
+        }
+        applyFilters();
+      });
+    });
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
+        active = [];
+        filterBtns.forEach(function (b) { b.classList.remove('active'); });
+        applyFilters();
+      });
+    }
+
+    prevBtn.addEventListener('click', function () {
+      track.scrollBy({ left: -pageWidth() * columnCount(), behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', function () {
+      track.scrollBy({ left: pageWidth() * columnCount(), behavior: 'smooth' });
+    });
+
+    track.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', function () {
+      applyColumnMode();
+      buildDots();
+      updateArrows();
+    });
+
+    applyFilters();
+  });
+})();
