@@ -26,6 +26,14 @@
   github: "mesabloo/beamer-theme"
   tech: [LaTeX]
 
+- name: "Diagnose"
+  featured: true 
+  image: "diagnose.png"
+  description: >
+    A simple library for reporting compiler/interpreter errors.
+  github: "mesabloo/diagnose"
+  tech: [Haskell]
+
 - name: "Zilch, N*"
   featured: true 
   image: "zilch.png"
