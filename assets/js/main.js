@@ -269,7 +269,7 @@
     function getVisible() {
       return allItems.filter(function (item) {
         var cats = (item.getAttribute('data-categories') || '').split(' ');
-        var catOk = activeFilters.length === 0 || activeFilters.every(function (f) {
+        var catOk = activeFilters.length === 0 || activeFilters.some(function (f) {
           return cats.indexOf(f) !== -1;
         });
         var text = (item.getAttribute('data-search-text') || '').toLowerCase();

@@ -138,14 +138,6 @@ title: Home
         data-search-text="{{ pub.title }} {{ pub.authors }} {{ pub.venue }}">
 
         <div class="pub-summary">
-          {% if pub.categories %}
-          <div class="cat-pills">
-            {% for cat in pub.categories %}<span class="cat-pill cat-pill-{{ cat }}">{{ cat | capitalize }}</span>{% endfor %}
-          </div>
-          {% else %}
-          <div></div>
-          {% endif %}
-
           <span class="pub-title">
             {% assign paper_link = pub.links | where: "label", "Paper" | first %}
             {% if paper_link %}
@@ -154,6 +146,14 @@ title: Home
             {{ pub.title }}
             {% endif %}
           </span>
+
+          {% if pub.categories %}
+          <div class="cat-pills">
+            {% for cat in pub.categories %}<span class="cat-pill cat-pill-{{ cat }}">{{ cat | capitalize }}</span>{% endfor %}
+          </div>
+          {% else %}
+          <div></div>
+          {% endif %}
 
           <span class="pub-year">{{ pub.year }}</span>
 
@@ -232,6 +232,8 @@ title: Home
         data-search-text="{{ talk.title }} {{ talk.venue }}">
 
         <div class="talk-summary">
+          <span class="talk-title">{{ talk.title }}</span>
+
           {% if talk.categories %}
           <div class="cat-pills">
             {% for cat in talk.categories %}<span class="cat-pill cat-pill-{{ cat }}">{{ cat | capitalize }}</span>{% endfor %}
@@ -240,8 +242,6 @@ title: Home
           <div></div>
           {% endif %}
 
-          <span class="talk-title">{{ talk.title }}</span>
-
           <time class="talk-date">{{ talk.date }}</time>
 
           <svg class="talk-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -249,7 +249,7 @@ title: Home
 
         <div class="talk-detail">
           <div class="talk-detail-inner">
-            <p class="talk-venue">{{ talk.venue }}{% if talk.type %} · <em>{{ talk.type }}</em>{% endif %}</p>
+            <p class="talk-venue">At: {{ talk.venue }}{% if talk.type %} · <em>{{ talk.type }}</em>{% endif %}</p>
 
             {% if talk.links %}
             <div class="talk-links">
