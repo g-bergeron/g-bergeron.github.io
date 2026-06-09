@@ -120,67 +120,65 @@ title: Home
     <span class="section-label">02. Research</span>
     <h2 class="section-title">Publications</h2>
 
-    <div class="cat-filter-bar" data-target="publications-track">
+    <div class="list-search-row">
+      <input type="text" class="list-search-input" id="pub-search" placeholder="Search by title, author, venue…" autocomplete="off">
+    </div>
+
+    <div class="cat-filter-bar" id="pub-filter-bar">
       <button type="button" class="cat-filter cat-filter-conference" data-category="conference">Conference</button>
       <button type="button" class="cat-filter cat-filter-workshop" data-category="workshop">Workshop</button>
       <button type="button" class="cat-filter cat-filter-journal" data-category="journal">Journal</button>
       <button type="button" class="cat-filter-clear">Clear</button>
     </div>
 
-    <p class="scroll-empty" hidden>No items match the selected filters.</p>
+    <div id="pub-list">
+      {% for pub in site.data.publications %}
+      <article class="publication-item"
+        {% if pub.categories %}data-categories="{{ pub.categories | join: ' ' }}"{% endif %}
+        data-search-text="{{ pub.title }} {{ pub.authors }} {{ pub.venue }}">
 
-    <div class="scroll-pane">
-      <button type="button" class="scroll-arrow scroll-arrow-prev" aria-label="Previous">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      </button>
+        <div class="pub-summary">
+          {% if pub.categories %}
+          <div class="cat-pills">
+            {% for cat in pub.categories %}<span class="cat-pill cat-pill-{{ cat }}">{{ cat | capitalize }}</span>{% endfor %}
+          </div>
+          {% else %}
+          <div></div>
+          {% endif %}
 
-      <div class="scroll-pane-window">
-        <div class="scroll-pane-track" id="publications-track">
-          {% for pub in site.data.publications %}
-          <article class="publication-item"{% if pub.categories %} data-categories="{{ pub.categories | join: ' ' }}"{% endif %}>
-
-            {% if pub.categories %}
-            <div class="cat-pills">
-              {% for cat in pub.categories %}<span class="cat-pill cat-pill-{{ cat }}">{{ cat | capitalize }}</span>{% endfor %}
-            </div>
+          <span class="pub-title">
+            {% assign paper_link = pub.links | where: "label", "Paper" | first %}
+            {% if paper_link %}
+            <a href="{{ paper_link.url }}" target="_blank" rel="noopener noreferrer">{{ pub.title }}</a>
+            {% else %}
+            {{ pub.title }}
             {% endif %}
+          </span>
 
-            <h3 class="pub-title">
-              {% assign paper_link = pub.links | where: "label", "Paper" | first %}
-              {% if paper_link %}
-              <a href="{{ paper_link.url }}" target="_blank" rel="noopener noreferrer">{{ pub.title }}</a>
-              {% else %}
-              {{ pub.title }}
-              {% endif %}
-            </h3>
+          <span class="pub-year">{{ pub.year }}</span>
 
+          <svg class="pub-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+
+        <div class="pub-detail">
+          <div class="pub-detail-inner">
             <p class="pub-authors">{{ pub.authors | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
             <p class="pub-venue">
               {% assign pub_kind = pub.kind %}
-              {% if pub_kind == "appeared" %}
-                In:
-              {% elsif pub_kind == "to appear" %}
-                To appear in:
-              {% elsif pub_kind == "submitted" %}
-                <em>Submitted</em>
+              {% if pub_kind == "appeared" %}In:
+              {% elsif pub_kind == "to appear" %}To appear in:
+              {% elsif pub_kind == "submitted" %}<em>Submitted</em>
               {% endif %}
               <em>
-                {% if pub.venue_url %}
-                <a href="{{ pub.venue_url }}">
-                {% endif %}
-                  {{ pub.venue | markdownify | remove: '<p>' | remove: '</p>' | strip }}
-                {% if pub.venue_url %}
-                </a>
-                {% endif %}
-                ({{ pub.year }})
+                {% if pub.venue_url %}<a href="{{ pub.venue_url }}">{% endif %}
+                {{ pub.venue | markdownify | remove: '<p>' | remove: '</p>' | strip }}
+                {% if pub.venue_url %}</a>{% endif %}
+                {% if pub.venue and pub.venue != "" %}({{ pub.year }}){% endif %}
               </em>
             </p>
 
             {% if pub.abstract and pub.abstract != "" %}
-            <details class="pub-abstract">
-              <summary>Abstract</summary>
-              <p>{{ pub.abstract }}</p>
-            </details>
+            <p class="pub-abstract-text">{{ pub.abstract }}</p>
             {% endif %}
 
             {% if pub.links %}
@@ -196,18 +194,14 @@ title: Home
               {% for tag in pub.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
             </div>
             {% endif %}
-
-          </article>
-          {% endfor %}
+          </div>
         </div>
-      </div>
 
-      <button type="button" class="scroll-arrow scroll-arrow-next" aria-label="Next">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </button>
+      </article>
+      {% endfor %}
     </div>
 
-    <div class="scroll-dots" aria-hidden="true"></div>
+    <nav class="list-pagination" id="pub-pagination" aria-label="Publications pagination"></nav>
   </div>
 </section>
 
@@ -220,57 +214,58 @@ title: Home
     <span class="section-label">03. Speaking</span>
     <h2 class="section-title">Talks</h2>
 
-    <div class="cat-filter-bar" data-target="talks-track">
+    <div class="list-search-row">
+      <input type="text" class="list-search-input" id="talk-search" placeholder="Search by title, venue…" autocomplete="off">
+    </div>
+
+    <div class="cat-filter-bar" id="talk-filter-bar">
       <button type="button" class="cat-filter cat-filter-conference" data-category="conference">Conference</button>
       <button type="button" class="cat-filter cat-filter-workshop" data-category="workshop">Workshop</button>
       <button type="button" class="cat-filter cat-filter-seminar" data-category="seminar">Seminar</button>
       <button type="button" class="cat-filter-clear">Clear</button>
     </div>
 
-    <p class="scroll-empty" hidden>No items match the selected filters.</p>
+    <div id="talk-list">
+      {% for talk in site.data.talks %}
+      <article class="talk-item"
+        {% if talk.categories %}data-categories="{{ talk.categories | join: ' ' }}"{% endif %}
+        data-search-text="{{ talk.title }} {{ talk.venue }}">
 
-    <div class="scroll-pane">
-      <button type="button" class="scroll-arrow scroll-arrow-prev" aria-label="Previous">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      </button>
+        <div class="talk-summary">
+          {% if talk.categories %}
+          <div class="cat-pills">
+            {% for cat in talk.categories %}<span class="cat-pill cat-pill-{{ cat }}">{{ cat | capitalize }}</span>{% endfor %}
+          </div>
+          {% else %}
+          <div></div>
+          {% endif %}
 
-      <div class="scroll-pane-window">
-        <div class="scroll-pane-track" id="talks-track">
-          {% for talk in site.data.talks %}
-          <article class="talk-item"{% if talk.categories %} data-categories="{{ talk.categories | join: ' ' }}"{% endif %}>
+          <span class="talk-title">{{ talk.title }}</span>
 
-            {% if talk.categories %}
-            <div class="cat-pills">
-              {% for cat in talk.categories %}<span class="cat-pill cat-pill-{{ cat }}">{{ cat | capitalize }}</span>{% endfor %}
+          <time class="talk-date">{{ talk.date }}</time>
+
+          <svg class="talk-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+
+        <div class="talk-detail">
+          <div class="talk-detail-inner">
+            <p class="talk-venue">{{ talk.venue }}{% if talk.type %} · <em>{{ talk.type }}</em>{% endif %}</p>
+
+            {% if talk.links %}
+            <div class="talk-links">
+              {% for link in talk.links %}
+              <a href="{{ link.url | relative_url }}" class="talk-link" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+              {% endfor %}
             </div>
             {% endif %}
-
-            <time class="talk-date">{{ talk.date }}</time>
-
-            <div>
-              <h3 class="talk-title">{{ talk.title }}</h3>
-              <p class="talk-venue">{{ talk.venue }}{% if talk.type %} · <em>{{ talk.type }}</em>{% endif %}</p>
-
-              {% if talk.links %}
-              <div class="talk-links">
-                {% for link in talk.links %}
-                <a href="{{ link.url | relative_url }}" class="talk-link" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
-                {% endfor %}
-              </div>
-              {% endif %}
-            </div>
-
-          </article>
-          {% endfor %}
+          </div>
         </div>
-      </div>
 
-      <button type="button" class="scroll-arrow scroll-arrow-next" aria-label="Next">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </button>
+      </article>
+      {% endfor %}
     </div>
 
-    <div class="scroll-dots" aria-hidden="true"></div>
+    <nav class="list-pagination" id="talk-pagination" aria-label="Talks pagination"></nav>
   </div>
 </section>
 

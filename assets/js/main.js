@@ -111,7 +111,7 @@
 // ════════════════════════════════════════
 (function () {
   var targets = document.querySelectorAll(
-    '.publication-item, .talk-item, .project-card, .timeline-item, .featured-project'
+    '.project-card, .timeline-item, .featured-project'
   );
 
   if (!('IntersectionObserver' in window)) {
@@ -236,142 +236,147 @@
 
 
 // ════════════════════════════════════════
-// Publications / Talks: category filters
-// + horizontally scrolling pane
+// Publications / Talks: search + filter
+// + accordion + pagination
 // ════════════════════════════════════════
 (function () {
-  var bars = document.querySelectorAll('.cat-filter-bar');
-  if (!bars.length) return;
+  var PER_PAGE_DEFAULT = 5;
 
-  var MIN_CARD_WIDTH = 240; // px — below 2x this + gap, collapse to a single column
+  function initSection(opts) {
+    var searchEl    = document.getElementById(opts.searchId);
+    var filterBar   = document.getElementById(opts.filterId);
+    var listEl      = document.getElementById(opts.listId);
+    var paginationEl = document.getElementById(opts.paginationId);
+    if (!listEl) return;
 
-  bars.forEach(function (bar) {
-    var trackId = bar.getAttribute('data-target');
-    var track = document.getElementById(trackId);
-    if (!track) return;
+    var allItems     = Array.prototype.slice.call(listEl.children);
+    var activeFilters = [];
+    var query        = '';
+    var page         = 0;
+    var perPage      = PER_PAGE_DEFAULT;
 
-    var pane = track.closest('.scroll-pane');
-    var section = bar.parentElement;
-    var emptyMsg = section.querySelector('.scroll-empty');
-    var dotsWrap = section.querySelector('.scroll-dots');
-    var prevBtn = pane.querySelector('.scroll-arrow-prev');
-    var nextBtn = pane.querySelector('.scroll-arrow-next');
-    var filterBtns = bar.querySelectorAll('.cat-filter');
-    var clearBtn = bar.querySelector('.cat-filter-clear');
-    var cards = track.children;
-    var active = [];
+    // ── Accordion toggle ──
+    listEl.addEventListener('click', function (e) {
+      var summary = e.target.closest('.pub-summary, .talk-summary');
+      if (!summary) return;
+      // Don't toggle when clicking a link inside the title
+      if (e.target.closest('a')) return;
+      var item = summary.parentElement;
+      if (item) item.classList.toggle('open');
+    });
 
-    function visibleCards() {
-      return Array.prototype.filter.call(cards, function (c) {
-        return c.style.display !== 'none';
-      });
-    }
-
-    function columnCount() {
-      return (track.clientWidth >= MIN_CARD_WIDTH * 2 + 20) ? 2 : 1;
-    }
-
-    function applyColumnMode() {
-      var cols = columnCount();
-      var gap = 20;
-
-      // Fixed pixel card width: avoids percentage-based sizing entirely, so
-      // the browser cannot redistribute space across more tracks than intended.
-      var cardWidth = (track.clientWidth - gap * (cols - 1)) / cols;
-      track.style.setProperty('--card-width', cardWidth + 'px');
-    }
-
-    function pageWidth() {
-      var v = visibleCards();
-      if (!v.length) return track.clientWidth;
-      return v[0].getBoundingClientRect().width + 20;
-    }
-
-    function buildDots() {
-      dotsWrap.innerHTML = '';
-      var v = visibleCards();
-      var perPage = columnCount() * 2;
-      var pages = Math.ceil(v.length / perPage);
-      dotsWrap.classList.toggle('hidden', pages <= 1);
-      for (var i = 0; i < pages; i++) {
-        var d = document.createElement('span');
-        if (i === 0) d.classList.add('active');
-        dotsWrap.appendChild(d);
-      }
-    }
-
-    function updateDots() {
-      var pw = pageWidth() * columnCount();
-      var idx = pw ? Math.round(track.scrollLeft / pw) : 0;
-      var dots = dotsWrap.children;
-      for (var i = 0; i < dots.length; i++) {
-        dots[i].classList.toggle('active', i === idx);
-      }
-    }
-
-    function updateArrows() {
-      prevBtn.disabled = track.scrollLeft <= 4;
-      nextBtn.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
-      updateDots();
-    }
-
-    function applyFilters() {
-      var anyVisible = false;
-      Array.prototype.forEach.call(cards, function (card) {
-        var cats = (card.getAttribute('data-categories') || '').split(' ');
-        var match = active.length === 0 || active.every(function (a) {
-          return cats.indexOf(a) !== -1;
+    // ── Filtering ──
+    function getVisible() {
+      return allItems.filter(function (item) {
+        var cats = (item.getAttribute('data-categories') || '').split(' ');
+        var catOk = activeFilters.length === 0 || activeFilters.every(function (f) {
+          return cats.indexOf(f) !== -1;
         });
-        card.style.display = match ? 'flex' : 'none';
-        if (match) anyVisible = true;
+        var text = (item.getAttribute('data-search-text') || '').toLowerCase();
+        var qOk  = !query || text.indexOf(query) !== -1;
+        return catOk && qOk;
       });
-
-      if (emptyMsg) emptyMsg.hidden = anyVisible;
-      pane.style.display = anyVisible ? 'flex' : 'none';
-
-      track.scrollTo({ left: 0 });
-      applyColumnMode();
-      buildDots();
-      updateArrows();
     }
 
-    filterBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var cat = btn.getAttribute('data-category');
-        var idx = active.indexOf(cat);
-        if (idx === -1) {
-          active.push(cat);
-          btn.classList.add('active');
-        } else {
-          active.splice(idx, 1);
-          btn.classList.remove('active');
+    // ── Render ──
+    function render() {
+      var visible = getVisible();
+      var total   = visible.length;
+      var pages   = Math.max(1, Math.ceil(total / perPage));
+      if (page >= pages) page = 0;
+
+      allItems.forEach(function (item) { item.style.display = 'none'; });
+      visible.slice(page * perPage, (page + 1) * perPage).forEach(function (item) {
+        item.style.display = '';
+      });
+
+      renderPagination(total, pages);
+    }
+
+    function renderPagination(total, pages) {
+      if (!paginationEl) return;
+      if (total === 0) {
+        paginationEl.innerHTML = '<p class="list-empty">No items match.</p>';
+        return;
+      }
+
+      var start = page * perPage + 1;
+      var end   = Math.min((page + 1) * perPage, total);
+
+      var pageNums = '';
+      for (var i = 0; i < pages; i++) {
+        pageNums += '<button type="button" class="pagination-btn' + (i === page ? ' active' : '') +
+          '" data-page="' + i + '">' + (i + 1) + '</button>';
+      }
+
+      var perPageOptions = [3, 5, 10].map(function (n) {
+        return '<option value="' + n + '"' + (perPage === n ? ' selected' : '') + '>' + n + '</option>';
+      }).join('');
+
+      paginationEl.innerHTML =
+        '<span class="pagination-info">' + start + '–' + end + ' of ' + total + '</span>' +
+        '<div class="pagination-buttons">' +
+          '<button type="button" class="pagination-btn" data-page="' + (page - 1) + '"' + (page === 0 ? ' disabled' : '') + '>← Prev</button>' +
+          pageNums +
+          '<button type="button" class="pagination-btn" data-page="' + (page + 1) + '"' + (page >= pages - 1 ? ' disabled' : '') + '>Next →</button>' +
+        '</div>' +
+        '<div class="pagination-per-page">' +
+          '<span>per page</span>' +
+          '<select data-per-page>' + perPageOptions + '</select>' +
+        '</div>';
+    }
+
+    // ── Pagination clicks ──
+    if (paginationEl) {
+      paginationEl.addEventListener('click', function (e) {
+        var btn = e.target.closest('.pagination-btn');
+        if (!btn || btn.disabled) return;
+        var p = parseInt(btn.getAttribute('data-page'), 10);
+        if (!isNaN(p)) { page = p; render(); }
+      });
+
+      paginationEl.addEventListener('change', function (e) {
+        if (e.target.hasAttribute('data-per-page')) {
+          perPage = parseInt(e.target.value, 10);
+          page = 0;
+          render();
         }
-        applyFilters();
-      });
-    });
-
-    if (clearBtn) {
-      clearBtn.addEventListener('click', function () {
-        active = [];
-        filterBtns.forEach(function (b) { b.classList.remove('active'); });
-        applyFilters();
       });
     }
 
-    prevBtn.addEventListener('click', function () {
-      track.scrollBy({ left: -pageWidth() * columnCount(), behavior: 'smooth' });
-    });
-    nextBtn.addEventListener('click', function () {
-      track.scrollBy({ left: pageWidth() * columnCount(), behavior: 'smooth' });
-    });
+    // ── Search ──
+    if (searchEl) {
+      searchEl.addEventListener('input', function () {
+        query = searchEl.value.trim().toLowerCase();
+        page  = 0;
+        render();
+      });
+    }
 
-    track.addEventListener('scroll', updateArrows, { passive: true });
-    window.addEventListener('resize', function () {
-      applyColumnMode();
-      buildDots();
-      updateArrows();
-    });
+    // ── Filter bar ──
+    if (filterBar) {
+      filterBar.addEventListener('click', function (e) {
+        var btn   = e.target.closest('.cat-filter');
+        var clear = e.target.closest('.cat-filter-clear');
+        if (clear) {
+          activeFilters = [];
+          filterBar.querySelectorAll('.cat-filter').forEach(function (b) { b.classList.remove('active'); });
+        } else if (btn) {
+          var cat = btn.getAttribute('data-category');
+          var idx = activeFilters.indexOf(cat);
+          if (idx === -1) { activeFilters.push(cat); btn.classList.add('active'); }
+          else            { activeFilters.splice(idx, 1); btn.classList.remove('active'); }
+        } else {
+          return;
+        }
+        page = 0;
+        render();
+      });
+    }
 
-    applyFilters();
-  });
+    render();
+  }
+
+  initSection({ searchId: 'pub-search',  filterId: 'pub-filter-bar',  listId: 'pub-list',  paginationId: 'pub-pagination'  });
+  initSection({ searchId: 'talk-search', filterId: 'talk-filter-bar', listId: 'talk-list', paginationId: 'talk-pagination' });
 })();
