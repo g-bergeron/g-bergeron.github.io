@@ -4,7 +4,7 @@
 # ─────────────────────────────────────────────────────────────
 
 - title: "Towards a verified compiler for Distributed PlusCal (extended)"
-  authors: "**Ghilain Bergeron**, Horatiu Cirstea, Stephan Merz"
+  authors: "Ghilain Bergeron, Horatiu Cirstea, Stephan Merz"
   venue: "Journal of Logical and Algebraic Methods in Programming"
   venue_url: "https://www.sciencedirect.com/journal/journal-of-logical-and-algebraic-methods-in-programming"
   kind: to appear
@@ -24,10 +24,11 @@
   tags: [Compilation, Formal Verification, Lean 4, PlusCal, Distributed Algorithms, Rewriting]
 
 - title: "BARReL: A modern backend for Atelier B in Lean"
-  authors: "**Ghilain Bergeron**, Vincent Trélat"
+  authors: "Ghilain Bergeron, Vincent Trélat"
   venue: ""
   kind: submitted
   year: 2026
+  categories: [preprint]
   abstract: | 
     BARReL is a Lean 4 library bridging Atelier B, an industrial tool for the B method, and the Lean proof assistant by 
     enabling users to conduct their formal B developments—up to machine refinement and implementation—interactively 
@@ -41,9 +42,42 @@
     We illustrate the approach on a small but representative case study, and argue that BARReL can act as a stepping stone towards 
     a strongly reliable Atelier B toolchain grounded in the Lean proof assistant.
   tags: [Lean 4, B Method, Metaprogramming]
+  links:
+    - label: Preprint
+      url: "https://arxiv.org/abs/2606.20121"
+
+- title: "BARReL: un backend moderne pour Atelier B dans Lean"
+  authors: "Ghilain Bergeron, Vincent Trélat"
+  venue: "Approches Formelles pour l'Assistance au Développement de Logiciels (AFADL)"
+  venue_url: "https://afadl2026.sciencesconf.org/"
+  kind: appeared
+  year: 2026
+  categories: [conference]
+  abstract: |
+    BARReL est une bibliothèque Lean 4 qui fait le lien entre Atelier B, un outil
+    industriel pour la méthode B, et l'assistant à la preuve Lean, en permettant aux
+    utilisateurs de mener leurs développements formels en B---du raffinement des
+    machines jusqu'à l'implémentation---de manière interactive dans Lean, tout en
+    conservant la syntaxe standard de B. Les opérateurs partiels de B sont encodés
+    soigneusement en générant des conditions explicites de bonne définition, en
+    tirant parti des types dépendants de Lean pour imposer, par construction, une
+    discipline de bonne définition. Autrement dit, les obligations de preuve et les
+    étapes de preuve ne peuvent pas reposer implicitement sur des objets mal typés
+    ou mal définis. BARReL propose aussi une automatisation de base pour tenter de
+    décharger automatiquement de telles conditions de bonne définition.
+    L'implémentation utilise les fonctionnalités de métaprogrammation de Lean et est
+    conçue pour être modulaire : étendre le fragment de B pris en charge revient
+    généralement à ajouter de la nouvelle syntaxe et des clauses d'encodage. Nous
+    illustrons l'approche sur une étude de cas représentative et affirmons que
+    BARReL peut constituer une première étape vers une chaîne d'outils fiables pour
+    la méthode B.
+  links:
+    - label: Paper
+      url: "/assets/papers/BARReL-AFADL26.pdf"
+  tags: [PlusCal, Join Calculus, Encoding]
 
 - title: "Encoding Network PlusCal into the Join Calculus"
-  authors: "**Ghilain Bergeron**"
+  authors: "Ghilain Bergeron"
   venue: "Approches Formelles pour l'Assistance au Développement de Logiciels (AFADL)"
   venue_url: "https://afadl2026.sciencesconf.org/"
   kind: appeared
@@ -55,12 +89,14 @@
     Mutual exclusion among non-deterministic branches of atomic blocks is enforced by a per-block nullary atom that is consumed once a branch succeeds. 
     We illustrate this scheme on a Ping-Pong example involving a server and multiple client processes.
   links:
+    - label: Paper
+      url: "/assets/papers/NPCal2Join-AFADL26.pdf"
     - label: Slides
       url: "/assets/slides/AFADL-2026.pdf"
   tags: [PlusCal, Join Calculus, Encoding]
 
 - title: "Formalizing Splitting in Isabelle/HOL"
-  authors: "**Ghilain Bergeron**, Florent Krasnopol, Sophie Tourret"
+  authors: "Ghilain Bergeron, Florent Krasnopol, Sophie Tourret"
   venue: "16th International Conference on Interactive Theorem Proving (ITP)"
   venue_url: "https://icetcs.github.io/frocos-itp-tableaux25/itp/"
   kind: appeared
@@ -81,7 +117,7 @@
   tags: [Formal Verification, Isabelle/HOL, Saturation-Based Calculi, Splitting]
 
 - title: "Towards a verified compiler for Distributed PlusCal"
-  authors: "**Ghilain Bergeron**, Horatiu Cirstea, Stephan Merz"
+  authors: "Ghilain Bergeron, Horatiu Cirstea, Stephan Merz"
   venue: "11th International Workshop on Rewriting Techniques for Program Transformations and Evaluation (WPTE)"
   venue_url: "https://wpte2025.github.io/"
   kind: appeared
@@ -103,7 +139,7 @@
   tags: [Compilation, Formal Verification, PlusCal, Distributed Algorithms, Rewriting]
 
 - title: "HOL Light to Isabelle/HOL translation, rebooted"
-  authors: "**Ghilain Bergeron**, Stéphane Glondu, Sophie Tourret"
+  authors: "Ghilain Bergeron, Stéphane Glondu, Sophie Tourret"
   venue: "Isabelle Workshop"
   venue_url: "https://sketis.net/isabelle/isabelle-workshop-2024"
   kind: appeared

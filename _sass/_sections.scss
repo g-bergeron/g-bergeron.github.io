@@ -691,6 +691,8 @@ $cat-seminar-bg: #faece7;
 $cat-seminar-fg: #712b13;
 $cat-journal-bg: #fbeaf0;
 $cat-journal-fg: #72243e;
+$cat-preprint-bg: #faeeda;
+$cat-preprint-fg: #633806;
 
 // Dark-mode category colors
 $cat-conference-bg-dark: #0c447c;
@@ -701,6 +703,8 @@ $cat-seminar-bg-dark: #712b13;
 $cat-seminar-fg-dark: #f5c4b3;
 $cat-journal-bg-dark: #72243e;
 $cat-journal-fg-dark: #f4c0d1;
+$cat-preprint-bg-dark: #633806;
+$cat-preprint-fg-dark: #fac775;
 
 .cat-filter-bar {
   display: flex;
@@ -723,12 +727,14 @@ $cat-journal-fg-dark: #f4c0d1;
   &-workshop   { background: $cat-workshop-bg;   color: $cat-workshop-fg; }
   &-seminar    { background: $cat-seminar-bg;    color: $cat-seminar-fg; }
   &-journal    { background: $cat-journal-bg;    color: $cat-journal-fg; }
+  &-preprint   { background: $cat-preprint-bg;   color: $cat-preprint-fg; }
 
   &.active {
     &.cat-filter-conference { background: $cat-conference-fg; color: $cat-conference-bg; }
     &.cat-filter-workshop   { background: $cat-workshop-fg;   color: $cat-workshop-bg; }
     &.cat-filter-seminar    { background: $cat-seminar-fg;    color: $cat-seminar-bg; }
     &.cat-filter-journal    { background: $cat-journal-fg;    color: $cat-journal-bg; }
+    &.cat-filter-preprint   { background: $cat-preprint-fg;   color: $cat-preprint-bg; }
   }
 }
 
@@ -737,12 +743,14 @@ $cat-journal-fg-dark: #f4c0d1;
   &-workshop   { background: $cat-workshop-bg-dark;   color: $cat-workshop-fg-dark; }
   &-seminar    { background: $cat-seminar-bg-dark;    color: $cat-seminar-fg-dark; }
   &-journal    { background: $cat-journal-bg-dark;    color: $cat-journal-fg-dark; }
+  &-preprint   { background: $cat-preprint-bg-dark;   color: $cat-preprint-fg-dark; }
 
   &.active {
     &.cat-filter-conference { background: $cat-conference-fg-dark; color: $cat-conference-bg-dark; }
     &.cat-filter-workshop   { background: $cat-workshop-fg-dark;   color: $cat-workshop-bg-dark; }
     &.cat-filter-seminar    { background: $cat-seminar-fg-dark;    color: $cat-seminar-bg-dark; }
     &.cat-filter-journal    { background: $cat-journal-fg-dark;    color: $cat-journal-bg-dark; }
+    &.cat-filter-preprint   { background: $cat-preprint-fg-dark;   color: $cat-preprint-bg-dark; }
   }
 }
 
@@ -785,6 +793,7 @@ $cat-journal-fg-dark: #f4c0d1;
   &-workshop   { background: $cat-workshop-bg;   color: $cat-workshop-fg; }
   &-seminar    { background: $cat-seminar-bg;    color: $cat-seminar-fg; }
   &-journal    { background: $cat-journal-bg;    color: $cat-journal-fg; }
+  &-preprint   { background: $cat-preprint-bg;   color: $cat-preprint-fg; }
 }
 
 [data-theme="dark"] .cat-pill {
@@ -792,6 +801,7 @@ $cat-journal-fg-dark: #f4c0d1;
   &-workshop   { background: $cat-workshop-bg-dark;   color: $cat-workshop-fg-dark; }
   &-seminar    { background: $cat-seminar-bg-dark;    color: $cat-seminar-fg-dark; }
   &-journal    { background: $cat-journal-bg-dark;    color: $cat-journal-fg-dark; }
+  &-preprint   { background: $cat-preprint-bg-dark;   color: $cat-preprint-fg-dark; }
 }
 
 .list-empty {
