@@ -28,7 +28,7 @@
 
 - name: "Diagnose"
   featured: true 
-  image: "diagnose.png"
+  image: ""
   description: >
     A simple library for reporting compiler/interpreter errors.
   github: "mesabloo/diagnose"

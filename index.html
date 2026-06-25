@@ -287,7 +287,9 @@ title: Home
       <article class="featured-project">
 
         <!-- Screenshot / placeholder — uses Socialify auto-card if no custom image set -->
+        {% capture fp_link %}{% if project.github and project.github != "" %}https://github.com/{{ project.github }}{% elsif project.demo and project.demo != "" %}{{ project.demo }}{% endif %}{% endcapture %}
         <div class="fp-image">
+          {% if fp_link != "" %}<a href="{{ fp_link }}" target="_blank" rel="noopener noreferrer">{% endif %}
           {% if project.image and project.image != "" %}
           <img src="{{ '/assets/img/' | append: project.image | relative_url }}" alt="{{ project.name }} screenshot"
             loading="lazy" />
@@ -306,6 +308,7 @@ title: Home
             </svg>
           </div>
           {% endif %}
+          {% if fp_link != "" %}</a>{% endif %}
         </div>
 
         <!-- Text content -->
