@@ -41,3 +41,11 @@
     A low-level functional programming language based on algebraic effects and quantitative type theory, compiling to a custom cross-platform typed assembly language.
   github: "zilch-lang"
   tech: [Haskell, Isabelle/HOL, Assembly, Agda]
+
+- name: "texsift"
+  featured: true
+  image: ""
+  description: >
+    A CLI tool that filters and colorizes LaTeX/latexmk build logs, grouping errors, warnings, and box diagnostics by the source file they occurred in.
+  github: "mesabloo/texsift"
+  tech: [Rust]
